@@ -1,0 +1,13 @@
+body{
+  text-align: center;
+}
+.motto{
+    font-family: 'Yusei Magic', sans-serif;
+  margin-top: 40px;
+  color: rgb(197, 11, 11);
+}
+
+.contact-info{
+  background-color:rgb(54, 56, 58);
+  padding: 30px auto 0px;
+}
