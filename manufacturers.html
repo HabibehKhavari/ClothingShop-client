@@ -11,7 +11,21 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Notable&family=Yusei+Magic&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style2.css">
 
+    <script>
+        function addManufacturer(){
+            var mnfName = document.getElementById("mnfName").value;
+            var body = document.getElementById("MnfTableBody");
+            var row = document.createElement("tr");
+            var cell = document.createElement("td");
+
+            cell.innerHTML = mnfName;
+            row.appendChild(cell);
+            body.appendChild(row);
+            
+        }
+    </script>
 
 </head>
 
@@ -309,7 +323,7 @@
             </div>
             <div class="registrationRow">
                 <label for="mnfMoreDetails">More details:</label>
-                <textarea rows="5" cols="60" type="text" name="mnfMoreDetails" id="mnfMoreDetails"></textarea>
+                <textarea rows="5" cols="60" type="text" name="mnfMoreDetails" id="mnfMoreDetails" placeholder="Enter text"></textarea>
             </div>
             <div>
                 <input class="button" type="button" value="Register" onclick="addManufacturer();">
@@ -317,7 +331,7 @@
             </div>
         </form>
 
-        
+
         <table border="1px">
             <thead style="background-color:rgb(56, 56, 56); color: white;">
                 <tr>
