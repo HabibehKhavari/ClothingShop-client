@@ -16,9 +16,19 @@
     <script>
         var Manufacturers = [];
 
+        function compareManufacturers(a, b) {
+            if (a.name.toUpperCase() < b.name.toUpperCase()) return -1;
+            if (a.name.toUpperCase() > b.name.toUpperCase()) return 1;
+            // equal fuuk names
+            if (a.country < b.country) return -1;
+            if (a.country > b.country) return 1;
+
+            return 0;
+        }
+
         function addManufacturer() {
             getNewManufacturer();
-            Manufacturers.sort();
+            Manufacturers.sort(compareManufacturers);
             displayManufacturers();
             resetDataEntryFields();
         }
