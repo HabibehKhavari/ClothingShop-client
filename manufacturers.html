@@ -14,17 +14,79 @@
     <link rel="stylesheet" href="css/style2.css">
 
     <script>
-        function addManufacturer(){
-            var mnfName = document.getElementById("mnfName").value;
-            var body = document.getElementById("MnfTableBody");
-            var row = document.createElement("tr");
-            var cell = document.createElement("td");
+        var Manufacturers = [];
 
-            cell.innerHTML = mnfName;
-            row.appendChild(cell);
-            body.appendChild(row);
-            
+        function addManufacturer() {
+            getNewManufacturer();
+            Manufacturers.sort();
+            displayManufacturers();
+            resetDataEntryFields();
         }
+
+        function getNewManufacturer() {
+            var mnfName = document.getElementById("mnfName").value;
+            var mnfCountry = document.getElementById("mnfCountry").value;
+            var mnfLink1 = document.getElementById("mnfLink1").value;
+            var mnfLink2 = document.getElementById("mnfLink2").value;
+            var mnfDescription = document.getElementById("mnfDescription").value;
+            var mnfMoreDetails = document.getElementById("mnfMoreDetails").value;
+
+            var manufacturer = {
+                name: mnfName,
+                country: mnfCountry,
+                link1: mnfLink1,
+                link2: mnfLink2,
+                description: mnfDescription,
+                more_details: mnfMoreDetails,
+            };
+            Manufacturers.push(manufacturer);
+        }
+
+        function resetDataEntryFields() {
+            var mnfName = document.getElementById("mnfName").value = "";
+            var mnfCountry = document.getElementById("mnfCountry").value = "";
+            var mnfLink1 = document.getElementById("mnfLink1").value = "";
+            var mnfLink2 = document.getElementById("mnfLink2").value = "";
+            var mnfDescription = document.getElementById("mnfDescription").value = "";
+            var mnfMoreDetails = document.getElementById("mnfMoreDetails").value = "";
+
+        }
+
+        function displayManufacturers() {
+            var body = document.getElementById("MnfTableBody");
+            body.innerHTML = "";
+            for (var i = 0; i < Manufacturers.length; i++) {
+                var row = document.createElement("tr");
+
+                var cell = document.createElement("td");
+                cell.innerHTML = Manufacturers[i].name;
+                row.appendChild(cell);
+
+                var cell = document.createElement("td");
+                cell.innerHTML = Manufacturers[i].country;
+                row.appendChild(cell);
+
+                var cell = document.createElement("td");
+                cell.innerHTML = Manufacturers[i].link1;
+                row.appendChild(cell);
+
+                var cell = document.createElement("td");
+                cell.innerHTML = Manufacturers[i].link2;
+                row.appendChild(cell);
+
+                var cell = document.createElement("td");
+                cell.innerHTML = Manufacturers[i].description;
+                row.appendChild(cell);
+
+                var cell = document.createElement("td");
+                cell.innerHTML = Manufacturers[i].more_details;
+                row.appendChild(cell);
+
+                body.appendChild(row);
+            }
+        }
+
+
     </script>
 
 </head>
@@ -323,7 +385,8 @@
             </div>
             <div class="registrationRow">
                 <label for="mnfMoreDetails">More details:</label>
-                <textarea rows="5" cols="60" type="text" name="mnfMoreDetails" id="mnfMoreDetails" placeholder="Enter text"></textarea>
+                <textarea rows="5" cols="60" type="text" name="mnfMoreDetails" id="mnfMoreDetails"
+                    placeholder="Enter text"></textarea>
             </div>
             <div>
                 <input class="button" type="button" value="Register" onclick="addManufacturer();">
@@ -332,15 +395,15 @@
         </form>
 
 
-        <table border="1px">
+        <table border="1px;">
             <thead style="background-color:rgb(56, 56, 56); color: white;">
                 <tr>
-                    <th>Name</th>
-                    <th>Country</th>
-                    <th>Link1</th>
-                    <th>Link2</th>
-                    <th>Description</th>
-                    <th>More details</th>
+                    <td> Name </td>
+                    <td> Country </td>
+                    <td> Link1 </td>
+                    <td> Link2 </td>
+                    <td> Description </td>
+                    <td> More details </td>
                 </tr>
             </thead>
             <tbody id="MnfTableBody"></tbody>
