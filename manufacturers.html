@@ -26,29 +26,36 @@
         }
 
         function addManufacturer() {
-            getNewManufacturer();
-            displayManufacturers();
+           var req = new XMLHttpRequest();
+           req.open("POST", "http://127.0.0.1:3000/manufacturer", true);
+           req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+           rea.onload = () => {
+               console.log("Data sent to the server");
+               loadFromServer();
+           }
+           console.log("sending data to the server");
+           req.send("name=" + document.getElementById("mnfName").value + "&country=" + document.getElementById("mnfCountry") + "&link1=" + document.getElementById("mnfLink1").value + "&link2=" + document.getElementById("mnfLink2").value + "&description=" + document.getElementById("mnfDescription").value + "&more_details=" + document.getElementById("mnfMoreDetails").value )
             resetDataEntryFields();
         }
 
-        function getNewManufacturer() {
-            var mnfName = document.getElementById("mnfName").value;
-            var mnfCountry = document.getElementById("mnfCountry").value;
-            var mnfLink1 = document.getElementById("mnfLink1").value;
-            var mnfLink2 = document.getElementById("mnfLink2").value;
-            var mnfDescription = document.getElementById("mnfDescription").value;
-            var mnfMoreDetails = document.getElementById("mnfMoreDetails").value;
+        // function getNewManufacturer() {
+        //     var mnfName = document.getElementById("mnfName").value;
+        //     var mnfCountry = document.getElementById("mnfCountry").value;
+        //     var mnfLink1 = document.getElementById("mnfLink1").value;
+        //     var mnfLink2 = document.getElementById("mnfLink2").value;
+        //     var mnfDescription = document.getElementById("mnfDescription").value;
+        //     var mnfMoreDetails = document.getElementById("mnfMoreDetails").value;
 
-            var manufacturer = {
-                name: mnfName,
-                country: mnfCountry,
-                link1: mnfLink1,
-                link2: mnfLink2,
-                description: mnfDescription,
-                more_details: mnfMoreDetails,
-            };
-            manufacturers.push(manufacturer);
-        }
+        //     var manufacturer = {
+        //         name: mnfName,
+        //         country: mnfCountry,
+        //         link1: mnfLink1,
+        //         link2: mnfLink2,
+        //         description: mnfDescription,
+        //         more_details: mnfMoreDetails,
+        //     };
+        //     manufacturers.push(manufacturer);
+        // }
 
         function resetDataEntryFields() {
             var mnfName = document.getElementById("mnfName").value = "";
