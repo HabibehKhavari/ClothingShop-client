@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="css/style2.css">
 
     <script>
-
+        var manufacturers =[];
         function compareManufacturers(a, b) {
             if (a.name.toUpperCase() < b.name.toUpperCase()) return -1;
             if (a.name.toUpperCase() > b.name.toUpperCase()) return 1;
@@ -27,7 +27,6 @@
 
         function addManufacturer() {
             getNewManufacturer();
-            manufacturers.sort(compareManufacturers);
             displayManufacturers();
             resetDataEntryFields();
         }
@@ -62,6 +61,7 @@
         }
 
         function displayManufacturers() {
+            manufacturers.sort(compareManufacturers);
             var body = document.getElementById("MnfTableBody");
             body.innerHTML = "";
             for (var i = 0; i < manufacturers.length; i++) {
@@ -93,6 +93,22 @@
 
                 body.appendChild(row);
             }
+        }
+
+        function loadFromServer(){
+            var req = new XMLHttpRequest();
+            req.open("GET", "http://127.0.0.1/");
+            req.onload = function (){
+                if (req.status==200){
+                    manufacturers = JSON.parse(req.response);
+                    displayManufacturers();
+                }else{
+                    manufacturers =[];
+                    displayManufacturers();
+                    console.error("Problem loading manufacturers : "+ req.status);
+                }
+            };
+            req.send();
         }
         
 
@@ -420,43 +436,45 @@
     </div>
 
     <script>
-///from the server
-var manufacturers = [
-            {
-                name: "Ade",
-                country: "GRC",
-                link1: "www.sample1Ad.com",
-                link2: "www.sample2Ad.com",
-                description: "She is 29 and she lives in Greece.",
-                more_details: "she has worked in Amazon for 3 years.",
-            },
-            {
-                name: "Denis",
-                country: "GRC",
-                link1: "www.sample1De.com",
-                link2: "www.sample2De.com",
-                description: "He is 40 and He lives in Greece.",
-                more_details: "He has worked in Odyssea for 3 years.",
-            },
-            {
-                name: "Abanoub",
-                country: "EGY",
-                link1: "www.sample1AB.com",
-                link2: "www.sample2AB.com",
-                description: "He is 30 and he lives in Greece.",
-                more_details: "He has worked in ZARA for 4 years.",
-            },
-            {
-                name: "Habibeh",
-                country: "AFG",
-                link1: "www.sample1Hb.com",
-                link2: "www.sample2HB.com",
-                description: "She is 25 and she lives in Greece.",
-                more_details: "she has worked in H&M for 2 years.",
-            },
-        ];
-        manufacturers.sort(compareManufacturers);
-        displayManufacturers();
+// ///from the server
+loadFromServer();
+
+// var manufacturers = [
+//             {
+//                 name: "Ade",
+//                 country: "GRC",
+//                 link1: "www.sample1Ad.com",
+//                 link2: "www.sample2Ad.com",
+//                 description: "She is 29 and she lives in Greece.",
+//                 more_details: "she has worked in Amazon for 3 years.",
+//             },
+//             {
+//                 name: "Denis",
+//                 country: "GRC",
+//                 link1: "www.sample1De.com",
+//                 link2: "www.sample2De.com",
+//                 description: "He is 40 and He lives in Greece.",
+//                 more_details: "He has worked in Odyssea for 3 years.",
+//             },
+//             {
+//                 name: "Abanoub",
+//                 country: "EGY",
+//                 link1: "www.sample1AB.com",
+//                 link2: "www.sample2AB.com",
+//                 description: "He is 30 and he lives in Greece.",
+//                 more_details: "He has worked in ZARA for 4 years.",
+//             },
+//             {
+//                 name: "Habibeh",
+//                 country: "AFG",
+//                 link1: "www.sample1Hb.com",
+//                 link2: "www.sample2HB.com",
+//                 description: "She is 25 and she lives in Greece.",
+//                 more_details: "she has worked in H&M for 2 years.",
+//             },
+//         ];
+       
+//         displayManufacturers();
     </script>
 </body>
 
