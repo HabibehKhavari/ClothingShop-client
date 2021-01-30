@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="css/style2.css">
 
     <script>
-        var manufacturers =[];
+        let manufacturers =[];
         function compareManufacturers(a, b) {
             if (a.name.toUpperCase() < b.name.toUpperCase()) return -1;
             if (a.name.toUpperCase() > b.name.toUpperCase()) return 1;
@@ -26,10 +26,10 @@
         }
 
         function addManufacturer() {
-           var req = new XMLHttpRequest();
+           const req = new XMLHttpRequest();
            req.open("POST", "http://127.0.0.1:3000/manufacturer", true);
            req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-           rea.onload = () => {
+           req.onload = () => {
                console.log("Data sent to the server");
                loadFromServer();
            }
@@ -69,32 +69,32 @@
 
         function displayManufacturers() {
             manufacturers.sort(compareManufacturers);
-            var body = document.getElementById("MnfTableBody");
+            const body = document.getElementById("MnfTableBody");
             body.innerHTML = "";
-            for (var i = 0; i < manufacturers.length; i++) {
-                var row = document.createElement("tr");
+            for (let i = 0; i < manufacturers.length; i++) {
+                const row = document.createElement("tr");
 
-                var cell = document.createElement("td");
+                let cell = document.createElement("td");
                 cell.innerHTML = manufacturers[i].name;
                 row.appendChild(cell);
 
-                var cell = document.createElement("td");
+                cell = document.createElement("td");
                 cell.innerHTML = manufacturers[i].country;
                 row.appendChild(cell);
 
-                var cell = document.createElement("td");
+                cell = document.createElement("td");
                 cell.innerHTML = manufacturers[i].link1;
                 row.appendChild(cell);
 
-                var cell = document.createElement("td");
+                cell = document.createElement("td");
                 cell.innerHTML = manufacturers[i].link2;
                 row.appendChild(cell);
 
-                var cell = document.createElement("td");
+                cell = document.createElement("td");
                 cell.innerHTML = manufacturers[i].description;
                 row.appendChild(cell);
 
-                var cell = document.createElement("td");
+                cell = document.createElement("td");
                 cell.innerHTML = manufacturers[i].more_details;
                 row.appendChild(cell);
 
@@ -103,8 +103,8 @@
         }
 
         function loadFromServer(){
-            var req = new XMLHttpRequest();
-            req.open("GET", "http://127.0.0.1/");
+            const req = new XMLHttpRequest();
+            req.open("GET", "http://127.0.0.1:3000/manufacturers");
             req.onload = function (){
                 if (req.status==200){
                     manufacturers = JSON.parse(req.response);
