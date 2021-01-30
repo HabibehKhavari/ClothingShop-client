@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="css/style2.css">
 
     <script>
-        var Manufacturers = [];
 
         function compareManufacturers(a, b) {
             if (a.name.toUpperCase() < b.name.toUpperCase()) return -1;
@@ -28,7 +27,7 @@
 
         function addManufacturer() {
             getNewManufacturer();
-            Manufacturers.sort(compareManufacturers);
+            manufacturers.sort(compareManufacturers);
             displayManufacturers();
             resetDataEntryFields();
         }
@@ -49,7 +48,7 @@
                 description: mnfDescription,
                 more_details: mnfMoreDetails,
             };
-            Manufacturers.push(manufacturer);
+            manufacturers.push(manufacturer);
         }
 
         function resetDataEntryFields() {
@@ -65,37 +64,37 @@
         function displayManufacturers() {
             var body = document.getElementById("MnfTableBody");
             body.innerHTML = "";
-            for (var i = 0; i < Manufacturers.length; i++) {
+            for (var i = 0; i < manufacturers.length; i++) {
                 var row = document.createElement("tr");
 
                 var cell = document.createElement("td");
-                cell.innerHTML = Manufacturers[i].name;
+                cell.innerHTML = manufacturers[i].name;
                 row.appendChild(cell);
 
                 var cell = document.createElement("td");
-                cell.innerHTML = Manufacturers[i].country;
+                cell.innerHTML = manufacturers[i].country;
                 row.appendChild(cell);
 
                 var cell = document.createElement("td");
-                cell.innerHTML = Manufacturers[i].link1;
+                cell.innerHTML = manufacturers[i].link1;
                 row.appendChild(cell);
 
                 var cell = document.createElement("td");
-                cell.innerHTML = Manufacturers[i].link2;
+                cell.innerHTML = manufacturers[i].link2;
                 row.appendChild(cell);
 
                 var cell = document.createElement("td");
-                cell.innerHTML = Manufacturers[i].description;
+                cell.innerHTML = manufacturers[i].description;
                 row.appendChild(cell);
 
                 var cell = document.createElement("td");
-                cell.innerHTML = Manufacturers[i].more_details;
+                cell.innerHTML = manufacturers[i].more_details;
                 row.appendChild(cell);
 
                 body.appendChild(row);
             }
         }
-
+        
 
     </script>
 
@@ -122,7 +121,7 @@
     </nav>
 
     <div class="dataSection">
-        <form method="post" action="http://127.0.0.1:3000/manufacturers" id="attendeeData">
+        <form method="post" action="http://127.0.0.1:3000/manufacturers" id="manufacturerData">
             <div class="registrationRow">
                 <label for="mnfName">Name:</label>
                 <input type="text" name="mnfName" id="mnfName">
@@ -419,6 +418,46 @@
             <tbody id="MnfTableBody"></tbody>
         </table>
     </div>
+
+    <script>
+///from the server
+var manufacturers = [
+            {
+                name: "Ade",
+                country: "GRC",
+                link1: "www.sample1Ad.com",
+                link2: "www.sample2Ad.com",
+                description: "She is 29 and she lives in Greece.",
+                more_details: "she has worked in Amazon for 3 years.",
+            },
+            {
+                name: "Denis",
+                country: "GRC",
+                link1: "www.sample1De.com",
+                link2: "www.sample2De.com",
+                description: "He is 40 and He lives in Greece.",
+                more_details: "He has worked in Odyssea for 3 years.",
+            },
+            {
+                name: "Abanoub",
+                country: "EGY",
+                link1: "www.sample1AB.com",
+                link2: "www.sample2AB.com",
+                description: "He is 30 and he lives in Greece.",
+                more_details: "He has worked in ZARA for 4 years.",
+            },
+            {
+                name: "Habibeh",
+                country: "AFG",
+                link1: "www.sample1Hb.com",
+                link2: "www.sample2HB.com",
+                description: "She is 25 and she lives in Greece.",
+                more_details: "she has worked in H&M for 2 years.",
+            },
+        ];
+        manufacturers.sort(compareManufacturers);
+        displayManufacturers();
+    </script>
 </body>
 
 </html>
