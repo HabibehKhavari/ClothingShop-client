@@ -6,9 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manufacturers</title>
     <title>Place Order</title>
-    <link rel="stylesheet" href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css'>
-    <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Notable&family=Yusei+Magic&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style2.css">
@@ -27,7 +30,7 @@
 
         function addManufacturer() {
            const req = new XMLHttpRequest();
-           req.open("POST", "http://127.0.0.1:3000/manufacturer", true);
+           req.open("POST", "http://127.0.0.1:3000/manufacturers", true);
            req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
            req.onload = () => {
                console.log("Data sent to the server");
@@ -106,6 +109,7 @@
             const req = new XMLHttpRequest();
             req.open("GET", "http://127.0.0.1:3000/manufacturers");
             req.onload = function (){
+                console.log(req.status);
                 if (req.status==200){
                     manufacturers = JSON.parse(req.response);
                     displayManufacturers();
