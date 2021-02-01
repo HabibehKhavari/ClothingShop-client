@@ -31,13 +31,13 @@
         function addManufacturer() {
            const req = new XMLHttpRequest();
            req.open("POST", "http://127.0.0.1:3000/manufacturers", true);
-           req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
            req.onload = () => {
                console.log("Data sent to the server");
                loadFromServer();
            }
            console.log("sending data to the server");
-           req.send("name=" + document.getElementById("mnfName").value + "&country=" + document.getElementById("mnfCountry") + "&link1=" + document.getElementById("mnfLink1").value + "&link2=" + document.getElementById("mnfLink2").value + "&description=" + document.getElementById("mnfDescription").value + "&more_details=" + document.getElementById("mnfMoreDetails").value )
+           req.send("name=" + document.getElementById("mnfName").value + "&country=" + document.getElementById("mnfCountry").value + "&link1=" + document.getElementById("mnfLink1").value + "&link2=" + document.getElementById("mnfLink2").value + "&description=" + document.getElementById("mnfDescription").value + "&more_details=" + document.getElementById("mnfMoreDetails").value )
             resetDataEntryFields();
         }
 
@@ -425,7 +425,7 @@
                     placeholder="Enter text"></textarea>
             </div>
             <div>
-                <input class="button" type="button" value="Register" onclick="addManufacturer();">
+                <input class="button" type="submit" value="Register">
                 <input class="button" type="button" value="Refresh" onclick="loadFromServer();">
             </div>
         </form>
@@ -486,6 +486,12 @@ loadFromServer();
 //         ];
        
 //         displayManufacturers();
+    
+document.getElementById("manufacturerData")
+.addEventListener('submit' , (event) => {
+    event.preventDefault();
+    addManufacturer();
+})
     </script>
 </body>
 
