@@ -101,6 +101,14 @@
                 cell.innerHTML = manufacturers[i].more_details;
                 row.appendChild(cell);
 
+                cell = document.createElement("td");
+                cell = document.createElement("button");
+                cell.addEventListener("click", 
+                function(event){
+                    deleteOnServer(manufacturers[i].id);
+                })
+                row.appendChild(cell);
+
                 body.appendChild(row);
             }
         }
@@ -120,6 +128,23 @@
                 }
             };
             req.send();
+        }
+
+        function deleteOnServer(id){
+            console,log("Delete from the server "+id);
+            var req = new XMLHttpRequest();
+            req.open("DELETE", "http://127.0.0.1:3000/manufacturers/"+id);
+            //// use the workaround with the GET + the DELETE path
+             req.open("GET", "http://127.0.0.1:3000/manufacturers/DELETE/"+id);
+             req.onload = function() {
+                 if (req.status==200){
+                     loadFromServer();
+                 } else {
+                     alert ("Could not delete");
+                     console.error("Problem deleting manufacturers :"+req.status);
+                 }
+             };
+             req.send();
         }
         
 
@@ -440,6 +465,7 @@
                     <td> Link2 </td>
                     <td> Description </td>
                     <td> More details </td>
+                    <td> Actions </td>
                 </tr>
             </thead>
             <tbody id="MnfTableBody"></tbody>
