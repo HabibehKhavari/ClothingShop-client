@@ -103,6 +103,7 @@
 
                 cell = document.createElement("td");
                 cell = document.createElement("button");
+                cell.innerHTML = "Delete";
                 cell.addEventListener("click", 
                 function(event){
                     deleteOnServer(manufacturers[i].id);
@@ -135,7 +136,7 @@
             var req = new XMLHttpRequest();
             req.open("DELETE", "http://127.0.0.1:3000/manufacturers/"+id);
             //// use the workaround with the GET + the DELETE path
-             req.open("GET", "http://127.0.0.1:3000/manufacturers/DELETE/"+id);
+            // req.open("GET", "http://127.0.0.1:3000/manufacturers/DELETE/"+id);
              req.onload = function() {
                  if (req.status==200){
                      loadFromServer();
@@ -147,6 +148,23 @@
              req.send();
         }
         
+        function searchOnServer(){
+            var req = new XMLHttpRequest();
+            var filter = document.getElementById("searchOnName").value;
+            req.open("GET", "http://127.0.0.1:3000/manufacturers?name=" +filter);
+            req.onload = function () {
+                if (req.status==200){
+                    manufacturers = JSON.parse(req.response);
+                    displayManufacturers();
+                }else{
+                    alert("Error searching");
+                    manufacturers = [];
+                    displayManufacturers();
+                    console.error("Problem loading manufacturers :" +req.status);
+                }
+            }
+            req.send();
+        }
 
     </script>
 
