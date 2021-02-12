@@ -11,13 +11,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    
+
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Notable&family=Yusei+Magic&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style2.css">
 
     <script>
-        let manufacturers =[];
+        let manufacturers = [];
         function compareManufacturers(a, b) {
             if (a.name.toUpperCase() < b.name.toUpperCase()) return -1;
             if (a.name.toUpperCase() > b.name.toUpperCase()) return 1;
@@ -28,16 +28,28 @@
             return 0;
         }
 
-        function addManufacturer() {
-           const req = new XMLHttpRequest();
-           req.open("POST", "http://127.0.0.1:3000/manufacturers", true);
+        function updateManufacturer(index) {
+            const req = new XMLHttpRequest();
+            req.open("POST", "http://127.0.0.1:3000/manufacturers/PUT", true);
             req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-           req.onload = () => {
-               console.log("Data sent to the server");
-               loadFromServer();
-           }
-           console.log("sending data to the server");
-           req.send("name=" + document.getElementById("mnfName").value + "&country=" + document.getElementById("mnfCountry").value + "&link1=" + document.getElementById("mnfLink1").value + "&link2=" + document.getElementById("mnfLink2").value + "&description=" + document.getElementById("mnfDescription").value + "&more_details=" + document.getElementById("mnfMoreDetails").value )
+            req.onload = () => {
+                console.log("Data sent to the server");
+                loadFromServer();
+            }
+            console.log("updating data to the server");
+            req.send("id=" + manufacturers[index].id + "&name=" + manufacturers[index].name + "&country=" + manufacturers[index].country + "&link1=" + manufacturers[index].link1 + "&link2=" + manufacturers[index].link2 + "&description=" + manufacturers[index].description + "&more_details=" + manufacturers[index].more_details);
+        }
+
+        function addManufacturer() {
+            const req = new XMLHttpRequest();
+            req.open("POST", "http://127.0.0.1:3000/manufacturers", true);
+            req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            req.onload = () => {
+                console.log("Data sent to the server");
+                loadFromServer();
+            }
+            console.log("sending data to the server");
+            req.send("name=" + document.getElementById("mnfName").value + "&country=" + document.getElementById("mnfCountry").value + "&link1=" + document.getElementById("mnfLink1").value + "&link2=" + document.getElementById("mnfLink2").value + "&description=" + document.getElementById("mnfDescription").value + "&more_details=" + document.getElementById("mnfMoreDetails").value)
             resetDataEntryFields();
         }
 
@@ -78,89 +90,121 @@
                 const row = document.createElement("tr");
 
                 let cell = document.createElement("td");
+                cell.contentEditable = true;
+                cell.addEventListener("input", (ev) => {
+                    manufacturers[i].name = ev.target.innerHTML
+                })
                 cell.innerHTML = manufacturers[i].name;
                 row.appendChild(cell);
 
                 cell = document.createElement("td");
+                cell.contentEditable = true;
+                cell.addEventListener("input", (ev) => {
+                    manufacturers[i].country = ev.target.innerHTML
+                })
                 cell.innerHTML = manufacturers[i].country;
                 row.appendChild(cell);
 
                 cell = document.createElement("td");
+                cell.contentEditable = true;
+                cell.addEventListener("input", (ev) => {
+                    manufacturers[i].link1 = ev.target.innerHTML
+                })
                 cell.innerHTML = manufacturers[i].link1;
                 row.appendChild(cell);
 
                 cell = document.createElement("td");
+                cell.contentEditable = true;
+                cell.addEventListener("input", (ev) => {
+                    manufacturers[i].link2 = ev.target.innerHTML
+                })
                 cell.innerHTML = manufacturers[i].link2;
                 row.appendChild(cell);
 
                 cell = document.createElement("td");
+                cell.contentEditable = true;
+                cell.addEventListener("input", (ev) => {
+                    manufacturers[i].description = ev.target.innerHTML
+                })
                 cell.innerHTML = manufacturers[i].description;
                 row.appendChild(cell);
 
                 cell = document.createElement("td");
+                cell.contentEditable = true;
+                cell.addEventListener("input", (ev) => {
+                    manufacturers[i].more_details = ev.target.innerHTML
+                })
                 cell.innerHTML = manufacturers[i].more_details;
                 row.appendChild(cell);
 
                 cell = document.createElement("td");
-                cell = document.createElement("button");
-                cell.innerHTML = "Delete";
-                cell.addEventListener("click", 
+                let button = document.createElement("button");
+                button.innerHTML = "Delete";
+                button.addEventListener("click",
+                    function (event) {
+                        deleteOnServer(manufacturers[i].id);
+                    })
+                cell.appendChild(button);
+                button = document.createElement("button");
+                button.innerHTML = "Update";
+                button.addEventListener("click", 
                 function(event){
-                    deleteOnServer(manufacturers[i].id);
+                    updateManufacturer(i);
                 })
+                cell.appendChild(button);
                 row.appendChild(cell);
 
                 body.appendChild(row);
             }
         }
 
-        function loadFromServer(){
+        function loadFromServer() {
             const req = new XMLHttpRequest();
             req.open("GET", "http://127.0.0.1:3000/manufacturers");
-            req.onload = function (){
+            req.onload = function () {
                 console.log(req.status);
-                if (req.status==200){
+                if (req.status == 200) {
                     manufacturers = JSON.parse(req.response);
                     displayManufacturers();
-                }else{
-                    manufacturers =[];
+                } else {
+                    manufacturers = [];
                     displayManufacturers();
-                    console.error("Problem loading manufacturers : "+ req.status);
+                    console.error("Problem loading manufacturers : " + req.status);
                 }
             };
             req.send();
         }
 
-        function deleteOnServer(id){
-            console,log("Delete from the server "+id);
+        function deleteOnServer(id) {
+            console, log("Delete from the server " + id);
             var req = new XMLHttpRequest();
-            req.open("DELETE", "http://127.0.0.1:3000/manufacturers/"+id);
+            req.open("DELETE", "http://127.0.0.1:3000/manufacturers/" + id);
             //// use the workaround with the GET + the DELETE path
             // req.open("GET", "http://127.0.0.1:3000/manufacturers/DELETE/"+id);
-             req.onload = function() {
-                 if (req.status==200){
-                     loadFromServer();
-                 } else {
-                     alert ("Could not delete");
-                     console.error("Problem deleting manufacturers :"+req.status);
-                 }
-             };
-             req.send();
+            req.onload = function () {
+                if (req.status == 200) {
+                    loadFromServer();
+                } else {
+                    alert("Could not delete");
+                    console.error("Problem deleting manufacturers :" + req.status);
+                }
+            };
+            req.send();
         }
-        
-        function searchOnServer(){
+
+        function searchOnServer() {
             var req = new XMLHttpRequest();
             var filter = document.getElementById("searchOnName").value;
-            req.open("GET", "http://127.0.0.1:3000/manufacturers?name=" +filter);
+            req.open("GET", "http://127.0.0.1:3000/manufacturers?name=" + filter);
             req.onload = function () {
-                if (req.status==200){
+                if (req.status == 200) {
                     manufacturers = JSON.parse(req.response);
                     displayManufacturers();
-                }else{
+                } else {
                     alert("Error searching");
                     manufacturers = [];
                     displayManufacturers();
-                    console.error("Problem loading manufacturers :" +req.status);
+                    console.error("Problem loading manufacturers :" + req.status);
                 }
             }
             req.send();
@@ -491,51 +535,51 @@
     </div>
 
     <script>
-// ///from the server
-loadFromServer();
+        // ///from the server
+        loadFromServer();
 
-// var manufacturers = [
-//             {
-//                 name: "Ade",
-//                 country: "GRC",
-//                 link1: "www.sample1Ad.com",
-//                 link2: "www.sample2Ad.com",
-//                 description: "She is 29 and she lives in Greece.",
-//                 more_details: "she has worked in Amazon for 3 years.",
-//             },
-//             {
-//                 name: "Denis",
-//                 country: "GRC",
-//                 link1: "www.sample1De.com",
-//                 link2: "www.sample2De.com",
-//                 description: "He is 40 and He lives in Greece.",
-//                 more_details: "He has worked in Odyssea for 3 years.",
-//             },
-//             {
-//                 name: "Abanoub",
-//                 country: "EGY",
-//                 link1: "www.sample1AB.com",
-//                 link2: "www.sample2AB.com",
-//                 description: "He is 30 and he lives in Greece.",
-//                 more_details: "He has worked in ZARA for 4 years.",
-//             },
-//             {
-//                 name: "Habibeh",
-//                 country: "AFG",
-//                 link1: "www.sample1Hb.com",
-//                 link2: "www.sample2HB.com",
-//                 description: "She is 25 and she lives in Greece.",
-//                 more_details: "she has worked in H&M for 2 years.",
-//             },
-//         ];
-       
-//         displayManufacturers();
-    
-document.getElementById("manufacturerData")
-.addEventListener('submit' , (event) => {
-    event.preventDefault();
-    addManufacturer();
-})
+        // var manufacturers = [
+        //             {
+        //                 name: "Ade",
+        //                 country: "GRC",
+        //                 link1: "www.sample1Ad.com",
+        //                 link2: "www.sample2Ad.com",
+        //                 description: "She is 29 and she lives in Greece.",
+        //                 more_details: "she has worked in Amazon for 3 years.",
+        //             },
+        //             {
+        //                 name: "Denis",
+        //                 country: "GRC",
+        //                 link1: "www.sample1De.com",
+        //                 link2: "www.sample2De.com",
+        //                 description: "He is 40 and He lives in Greece.",
+        //                 more_details: "He has worked in Odyssea for 3 years.",
+        //             },
+        //             {
+        //                 name: "Abanoub",
+        //                 country: "EGY",
+        //                 link1: "www.sample1AB.com",
+        //                 link2: "www.sample2AB.com",
+        //                 description: "He is 30 and he lives in Greece.",
+        //                 more_details: "He has worked in ZARA for 4 years.",
+        //             },
+        //             {
+        //                 name: "Habibeh",
+        //                 country: "AFG",
+        //                 link1: "www.sample1Hb.com",
+        //                 link2: "www.sample2HB.com",
+        //                 description: "She is 25 and she lives in Greece.",
+        //                 more_details: "she has worked in H&M for 2 years.",
+        //             },
+        //         ];
+
+        //         displayManufacturers();
+
+        document.getElementById("manufacturerData")
+            .addEventListener('submit', (event) => {
+                event.preventDefault();
+                addManufacturer();
+            })
     </script>
 </body>
 
