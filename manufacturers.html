@@ -176,11 +176,11 @@
         }
 
         function deleteOnServer(id) {
-            console, log("Delete from the server " + id);
+            console.log("Delete from the server " + id);
             var req = new XMLHttpRequest();
-            req.open("DELETE", "http://127.0.0.1:3000/manufacturers/" + id);
+            //req.open("DELETE", "http://127.0.0.1:3000/manufacturers/" + id);
             //// use the workaround with the GET + the DELETE path
-            // req.open("GET", "http://127.0.0.1:3000/manufacturers/DELETE/"+id);
+            req.open("GET", "http://127.0.0.1:3000/manufacturers/DELETE/"+id);
             req.onload = function () {
                 if (req.status == 200) {
                     loadFromServer();
