@@ -17,6 +17,10 @@ body{
 width:50% ;
 height:20% ;
 }
+.data-section{
+  margin-top: 5%;
+  margin-bottom: 3%;
+}
 .photo{
   position: relative;
   margin-top: 5%;
