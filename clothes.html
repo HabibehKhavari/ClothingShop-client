@@ -32,6 +32,59 @@
                 <button class="btn btn-secondary my-2 my-sm-0" type="submit" onclick="searchOnServer(); return false;">Search</button>
             </form>
         </div>
-    </nav>  
+    </nav>
+
+<div class="dataSection">
+        <form method="post" action="http://127.0.0.1:3000/clothes" id="clothesData">
+            <div class="registrationRow">
+                <label for="clName">Code:</label>
+                <input type="text" name="clName" id="clName">
+            </div>
+            <div class="registrationRow">
+                <label for="clImage">Image:</label>
+                <input type="text" name="clImage" id="clImage">
+            </div>
+            <div class="registrationRow">
+                <label for="clManufacturer">Manufacturer:</label>
+                <input type="text" name="clManufacturer" id="clManufacturer">
+            </div>
+            <div class="registrationRow">
+                <label for="clDescription">Description:</label>
+                <input type="text" name="clDescription" id="clDescription">
+            </div>
+            <div class="registrationRow">
+                <label for="clMoreDetails">More details:</label>
+                <textarea rows="5" cols="60" type="text" name="clMoreDetails" id="clMoreDetails"
+                    placeholder="Enter text"></textarea>
+            </div>
+            <div class="registrationRow">
+                <label for="promotion">Promotion:</label>
+                <select name="promotion" id="promotion">
+                    <option value="True">True</option>
+                    <option value="False">False</option>
+                    </select>
+            </div>
+            <div>
+                <input class="button" type="submit" value="Register">
+                <input class="button" type="button" value="Refresh" onclick="loadFromServer();">
+            </div>
+        </form>
+
+
+        <table border="1px;">
+            <thead style="background-color:rgb(56, 56, 56); color: white;">
+                <tr>
+                    <td> Code </td>
+                    <td> Image </td>
+                    <td> Manufacturer </td>
+                    <td> Description </td>
+                    <td> More details </td>
+                    <td> Promotion </td>
+                    <td> Actions </td>
+                </tr>
+            </thead>
+            <tbody id="clTableBody"></tbody>
+        </table>
+    </div>
 </body>
 </html>
