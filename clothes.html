@@ -37,6 +37,21 @@
             var clManufacturers_id = document.getElementById("clManufacturers_id").value = "";
         }
 
+
+        function addCloth() {
+            const req = new XMLHttpRequest();
+            req.open("POST", "http://127.0.0.1:3000/clothes", true);
+            req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            req.onload = () => {
+                console.log("Data sent to the server");
+                loadFromServer();
+            }
+            console.log("sending data to the server");
+            req.send("code=" + document.getElementById("clCode").value + "&image=" + document.getElementById("clImage").value + "&manufacturer=" + document.getElementById("clManufacturer").value + "&description=" + document.getElementById("clDescription").value + "&more_details=" + document.getElementById("clMoreDetails").value + "&promotion=" + document.getElementById("promotion").value + "&manufacturers_id=" + document.getElementById("clManufacturers_id"));
+            resetDataEntryFields();
+        }
+
+
         function displayClothes() {
             clothes.sort(compareClothes);
 
@@ -150,7 +165,7 @@
                 <input type="text" name="clManufacturers_id" id="clManufacturers_id">
             </div>
             <div>
-                <input class="button" type="submit" value="Register">
+                <input class="button" type="button" value="Register" onclick="addCloth();">
                 <input class="button" type="button" value="Refresh" onclick="loadFromServer();">
             </div>
         </form>
