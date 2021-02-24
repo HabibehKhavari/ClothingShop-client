@@ -137,6 +137,25 @@
             };
             req.send();
         }
+
+        function searchOnServer() {
+            // AJAX request to the server
+            var req = new XMLHttpRequest();
+            var filter = document.getElementById("searchOnCode").value;
+            req.open("GET", "http://127.0.0.1:3000/clothes?filterCode=" + filter);
+            req.onload = function () {
+                if (req.status == 200) {
+                    clothes = JSON.parse(req.response);
+                    displayClothes();
+                } else {
+                    alert("Error searching");
+                    clothes = [];
+                    displayClothes();
+                    console.error("Problem loading attendees : " + req.status);
+                }
+            };
+            req.send();
+        }    
     </script>
 </head>
 
@@ -152,8 +171,8 @@
                 <li class="nav-item active"> <a class="nav-link" data-abc="true">Clothes</a> </li>
                 <li class="nav-item"> <a class="nav-link" href="orders.html" data-abc="true">Orders</a> </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0"> <input class="form-control mr-sm-2" type="text" name="searchOnName"
-                    id="searchOnName" placeholder="Search">
+            <form class="form-inline my-2 my-lg-0"> <input class="form-control mr-sm-2" type="text" name="searchOnCode"
+                    id="searchOnCode" placeholder="Search">
                 <button class="btn btn-secondary my-2 my-sm-0" type="submit" onclick="searchOnServer(); return false;">Search</button>
             </form>
         </div>
