@@ -88,6 +88,16 @@
                 cell.innerHTML = clothes[i].manufacturers_id;
                 row.appendChild(cell);
 
+                cell = document.createElement("td");
+                let button = document.createElement("button");
+                button.innerHTML = "Delete";
+                button.addEventListener("click",
+                    function (event) {
+                        deleteOnServer(clothes[i].id);
+                    })
+                cell.appendChild(button);
+                row.appendChild(cell);
+
                 body.appendChild(row);
             }
         }
@@ -104,6 +114,25 @@
                     clothes = [];
                     displayClothes();
                     console.error("Problem loading clothes : " + req.status);
+                }
+            };
+            req.send();
+        }
+
+        function deleteOnServer(id) {
+            console.log("Deleting from the server " + id);
+            // AJAX request from the server
+            var req = new XMLHttpRequest();
+            // the DELETE method does not work so ...
+            // req.open("DELETE", "http://127.0.0.1:3000/clothes/"+id);
+            // ... use the workaround with the GET + the DELETE path
+            req.open("GET", "http://127.0.0.1:3000/clothes/DELETE/"+id);
+            req.onload = function () {
+                if (req.status == 200) {
+                    loadFromServer();
+                } else {
+                    alert("Could not delete");
+                    console.error("Problem deleting attendees : " + req.status);
                 }
             };
             req.send();
