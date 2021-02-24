@@ -47,7 +47,7 @@
                 loadFromServer();
             }
             console.log("sending data to the server");
-            req.send("code=" + document.getElementById("clCode").value + "&image=" + document.getElementById("clImage").value + "&manufacturer=" + document.getElementById("clManufacturer").value + "&description=" + document.getElementById("clDescription").value + "&more_details=" + document.getElementById("clMoreDetails").value + "&promotion=" + document.getElementById("promotion").value + "&manufacturers_id=" + document.getElementById("clManufacturers_id"));
+            req.send("code=" + document.getElementById("clCode").value + "&image=" + document.getElementById("clImage").value + "&manufacturer=" + document.getElementById("clManufacturer").value + "&description=" + document.getElementById("clDescription").value + "&more_details=" + document.getElementById("clMoreDetails").value + "&promotion=" + document.getElementById("promotion").value + "&manufacturers_id=" + document.getElementById("clManufacturers_id").value);
             resetDataEntryFields();
         }
 
