@@ -27,6 +27,20 @@
             return 0;
         }
 
+        function updateClothes(index) {
+            // will make AJAX request instead
+            const req = new XMLHttpRequest();
+            req.open("POST", "http://127.0.0.1:3000/clothes/PUT", true);
+            // set headers
+            req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            // callback when the the request is served
+            req.onload = () => { 
+                console.log("Data sent to the server"); 
+                loadFromServer(); }        
+            console.log("Updating data to the server");
+            req.send("id=" + clothes[index].id +"&code=" + clothes[index].code + "&image=" +clothes[index].image + "&manufacturer=" + clothes[index].manufacturer + "&description=" + clothes[index].description + "&more_details=" + clothes[index].more_details + "&promotion=" + clothes[index].promotion + "&manufacturers_id=" + clothes[index].manufacturers_id);
+        }
+
         function resetDataEntryFields() {
             var clCode = document.getElementById("clCode").value = "";
             var clImage = document.getElementById("clImage").value = "";
@@ -61,30 +75,58 @@
                 const row = document.createElement("tr");
 
                 let cell = document.createElement("td");
+                cell.contentEditable = true;
+                cell.addEventListener("input", (ev) => {
+                    clothes[i].code = ev.target.innerHTML
+                })
                 cell.innerHTML = clothes[i].code;
                 row.appendChild(cell);
 
                 cell = document.createElement("td");
+                cell.contentEditable = true;
+                cell.addEventListener("input", (ev) => {
+                    clothes[i].image = ev.target.innerHTML
+                })
                 cell.innerHTML = clothes[i].image;
                 row.appendChild(cell);
 
                 cell = document.createElement("td");
+                cell.contentEditable = true;
+                cell.addEventListener("input", (ev) => {
+                    clothes[i].manufacturer = ev.target.innerHTML
+                })
                 cell.innerHTML = clothes[i].manufacturer;
                 row.appendChild(cell);
                 
                 cell = document.createElement("td");
+                cell.contentEditable = true;
+                cell.addEventListener("input", (ev) => {
+                    clothes[i].description = ev.target.innerHTML
+                })
                 cell.innerHTML = clothes[i].description;
                 row.appendChild(cell);
                 
                 cell = document.createElement("td");
+                cell.contentEditable = true;
+                cell.addEventListener("input", (ev) => {
+                    clothes[i].more_details = ev.target.innerHTML
+                })
                 cell.innerHTML = clothes[i].more_details;
                 row.appendChild(cell);
 
                 cell = document.createElement("td");
+                cell.contentEditable = true;
+                cell.addEventListener("input", (ev) => {
+                    clothes[i].promotion = ev.target.innerHTML
+                })
                 cell.innerHTML = clothes[i].promotion;
                 row.appendChild(cell);
 
                 cell = document.createElement("td");
+                cell.contentEditable = true;
+                cell.addEventListener("input", (ev) => {
+                    clothes[i].manufacturers_id = ev.target.innerHTML
+                })
                 cell.innerHTML = clothes[i].manufacturers_id;
                 row.appendChild(cell);
 
@@ -96,6 +138,16 @@
                         deleteOnServer(clothes[i].id);
                     })
                 cell.appendChild(button);
+
+                button = document.createElement("button");
+                button.innerHTML = "Update";
+                button.addEventListener(
+                    "click",
+                    function(event) {
+                        updateClothes(i);
+                    }
+                )
+                cell.appendChild(button)
                 row.appendChild(cell);
 
                 body.appendChild(row);
