@@ -29,23 +29,20 @@
         }
 
         function addOrder() {
-            getANewOrder();
-            displayOrders();
+            // will make AJAX request instead
+            var req = new XMLHttpRequest();
+            req.open("POST", "http://127.0.0.1:3000/orders", true);
+            // set headers
+            req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            // callback when the the request is served
+            req.onload = () => { 
+                console.log("Data sent to the server"); 
+                loadFromServer(); }        
+            console.log("Sending data to the server");
+            req.send("cloth_code=" + document.getElementById("orClothCode").value +"&quantity=" + document.getElementById("orQuantity").value +"&customer_code=" +document.getElementById("customerCode").value);
             resetDataEntryFields();
         }
-
-        function getANewOrder() {
-            var orClothCode = document.getElementById("orClothCode").value;
-            var orQuantity = document.getElementById("orQuantity").value;
-            var customerCode = document.getElementById("customerCode").value;
-            var order = {
-                cloth_code : orClothCode,
-                quantity : orQuantity,
-                customer_code : customerCode,
-            };
-            orders.push(order);
-        }
-
+    
         function resetDataEntryFields() {
             document.getElementById("orClothCode").value="";
             document.getElementById("orQuantity").value ="";
