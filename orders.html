@@ -21,7 +21,7 @@
         function compareOrders(a, b) {
             if (a.order_date < b.order_date) return -1;
             if (a.order_date > b.order_date) return 1;
-            // equal fuuk names
+            // equal date
             if (a.customer_code < b.customer_code) return -1;
             if (a.customer_code > b.customer_code) return 1;
 
@@ -30,7 +30,6 @@
 
         function addOrder() {
             getANewOrder();
-            orders.sort(compareOrders);
             displayOrders();
             resetDataEntryFields();
         }
@@ -54,6 +53,7 @@
         }
 
         function displayOrders() {
+            orders.sort(compareOrders);
             const body = document.getElementById("orTableBody");
             body.innerHTML = "";
             for (let i = 0; i < orders.length; i++) {
@@ -82,6 +82,23 @@
 
                 body.appendChild(row);
             }
+        }
+
+        function loadFromServer() {
+            // AJAX request to the server
+            var req = new XMLHttpRequest();
+            req.open("GET", "http://127.0.0.1:3000/orders");
+            req.onload = function () {
+                if (req.status == 200) {
+                    orders = JSON.parse(req.response);
+                    displayOrders();
+                } else {
+                    orders = [];
+                    displayOrders();
+                    console.error("Problem loading attendees : " + req.status);
+                }
+            };
+            req.send();
         }
     </script>
 </head>
@@ -142,5 +159,7 @@
         </table>
     </div>
 </body>
-
+<script>
+    loadFromServer();
+</script>
 </html>
