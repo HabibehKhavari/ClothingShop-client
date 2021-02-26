@@ -31,5 +31,42 @@
             </form>
         </div>
     </nav>
+
+    <div class="dataSection">
+        <form method="post" action="http://127.0.0.1:3000/orders" id="ordersData">
+            <div class="registrationRow">
+                <label for="orClothCode">Cloth code:</label>
+                <input type="text" name="orClothCode" id="orClothCode">
+            </div>
+            <div class="registrationRow">
+                <label for="orQuantity">Quantity:</label>
+                <input type="text" name="orQuantity" id="orQuantity">
+            </div>
+            <div class="registrationRow">
+                <label for="customerCode">Customer code:</label>
+                <input type="text" name="customerCode" id="customerCode">
+            </div>
+            
+            <div>
+                <input class="button" type="button" value="Register" onclick="addOrder();">
+                <input class="button" type="button" value="Refresh" onclick="loadFromServer();">
+            </div>
+        </form>
+
+
+        <table border="1px;">
+            <thead style="background-color:rgb(56, 56, 56); color: white;">
+                <tr>
+                    <td> ID </td>
+                    <td> Cloth Code </td>
+                    <td> Quantity </td>
+                    <td> Order Date </td>
+                    <td> Customer Code </td>
+                    <td> Actions </td>
+                </tr>
+            </thead>
+            <tbody id="orTableBody"></tbody>
+        </table>
+    </div>
 </body>
 </html>
