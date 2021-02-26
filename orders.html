@@ -28,6 +28,20 @@
             return 0;
         }
 
+        function updateOrder(index) {
+            // will make AJAX request instead
+            const req = new XMLHttpRequest();
+            req.open("POST", "http://127.0.0.1:3000/orders/PUT", true);
+            // set headers
+            req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            // callback when the the request is served
+            req.onload = () => { 
+                console.log("Data sent to the server"); 
+                loadFromServer(); }        
+            console.log("Updating data to the server");
+            req.send("id=" + orders[index].id + "&cloth_code=" + orders[index].cloth_code + "&quantity=" + orders[index].quantity + "&customer_code="+ orders[index].customer_code + "&order_date=" + orders[index].order_date);
+        }
+
         function deleteOnServer(id) {
             console.log("Deleting from the server " + id);
             // AJAX request to the server
@@ -99,19 +113,35 @@
                 row.appendChild(cell);
                 
                 cell = document.createElement("td");
+                cell.contentEditable = true;
+                cell.addEventListener("input", (ev) => {
+                    orders[i].cloth_code = ev.target.innerHTML
+                })
                 cell.innerHTML =  orders[i].cloth_code;
                 row.appendChild(cell);
 
                 cell = document.createElement("td");
+                cell.contentEditable = true;
+                cell.addEventListener("input", (ev) => {
+                    orders[i].quantity = ev.target.innerHTML
+                })
                 cell.innerHTML = orders[i].quantity;
                 row.appendChild(cell);
                 
 
                 cell = document.createElement("td");
+                cell.contentEditable = true;
+                cell.addEventListener("input", (ev) => {
+                    orders[i].order_date = ev.target.innerHTML
+                })
                 cell.innerHTML =  orders[i].order_date;
                 row.appendChild(cell);
                 
                 cell = document.createElement("td");
+                cell.contentEditable = true;
+                cell.addEventListener("input", (ev) => {
+                    orders[i].customer_code = ev.target.innerHTML
+                })
                 cell.innerHTML =  orders[i].customer_code;
                 row.appendChild(cell);
 
@@ -122,6 +152,16 @@
                     "click",
                     function(event) {
                         deleteOnServer(orders[i].id);
+                    }
+                )
+                cell.appendChild(button)
+
+                button = document.createElement("button");
+                button.innerHTML = "Update";
+                button.addEventListener(
+                    "click",
+                    function(event) {
+                        updateOrder(i);
                     }
                 )
                 cell.appendChild(button)
