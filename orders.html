@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,21 +14,83 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Notable&family=Yusei+Magic&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style2.css">
+
+    <script>
+        var orders = [];
+
+        function addOrder() {
+            getANewOrder();
+            orders.sort();
+            displayOrders();
+            resetDataEntryFields();
+        }
+
+        function getANewOrder() {
+            var orClothCode = document.getElementById("orClothCode").value;
+            var orQuantity = document.getElementById("orQuantity").value;
+            var customerCode = document.getElementById("customerCode").value;
+            var order = {
+                cloth_code : orClothCode,
+                quantity : orQuantity,
+                customer_code : customerCode,
+            };
+            orders.push(order);
+        }
+
+        function resetDataEntryFields() {
+            document.getElementById("orClothCode").value="";
+            document.getElementById("orQuantity").value ="";
+            document.getElementById("customerCode").value="";
+        }
+
+        function displayOrders() {
+            const body = document.getElementById("orTableBody");
+            body.innerHTML = "";
+            for (let i = 0; i < orders.length; i++) {
+                const row = document.createElement("tr");
+
+                let cell = document.createElement("td");
+                cell.innerHTML = orders[i].id;
+                row.appendChild(cell);
+                
+                cell = document.createElement("td");
+                cell.innerHTML =  orders[i].cloth_code;
+                row.appendChild(cell);
+
+                cell = document.createElement("td");
+                cell.innerHTML = orders[i].quantity;
+                row.appendChild(cell);
+                
+
+                cell = document.createElement("td");
+                cell.innerHTML =  orders[i].order_date;
+                row.appendChild(cell);
+                
+                cell = document.createElement("td");
+                cell.innerHTML =  orders[i].customer_code;
+                row.appendChild(cell);
+
+                body.appendChild(row);
+            }
+        }
+    </script>
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand"><img src="img/logo.png" alt="clothing-logo" style="width:75px; "></a>
-        
+
         <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item "> <a class="nav-link" href="manufacturers.html" data-abc="true">Manufacturers<span
                             class="sr-only">(current)</span></a> </li>
                 <li class="nav-item"> <a class="nav-link" href="clothes.html" data-abc="true">Clothes</a> </li>
-                <li class="nav-item active"> <a class="nav-link"  data-abc="true">Orders</a> </li>
+                <li class="nav-item active"> <a class="nav-link" data-abc="true">Orders</a> </li>
             </ul>
             <form class="form-inline my-2 my-lg-0"> <input class="form-control mr-sm-2" type="text" name="searchOnCode"
                     id="searchOnCode" placeholder="Search">
-                <button class="btn btn-secondary my-2 my-sm-0" type="submit" onclick="searchOnServer(); return false;">Search</button>
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit"
+                    onclick="searchOnServer(); return false;">Search</button>
             </form>
         </div>
     </nav>
@@ -46,7 +109,7 @@
                 <label for="customerCode">Customer code:</label>
                 <input type="text" name="customerCode" id="customerCode">
             </div>
-            
+
             <div>
                 <input class="button" type="button" value="Register" onclick="addOrder();">
                 <input class="button" type="button" value="Refresh" onclick="loadFromServer();">
@@ -69,4 +132,5 @@
         </table>
     </div>
 </body>
+
 </html>
