@@ -28,6 +28,25 @@
             return 0;
         }
 
+        function deleteOnServer(id) {
+            console.log("Deleting from the server " + id);
+            // AJAX request from the server
+            var req = new XMLHttpRequest();
+            // the DELETE method does not work so ...
+            // req.open("DELETE", "http://127.0.0.1:3000/orders/"+id);
+            // ... use the workaround with the GET + the DELETE path
+            req.open("GET", "http://127.0.0.1:3000/orders/DELETE/"+id);
+            req.onload = function () {
+                if (req.status == 200) {
+                    loadFromServer();
+                } else {
+                    alert("Could not delete");
+                    console.error("Problem deleting orders : " + req.status);
+                }
+            };
+            req.send();
+        }
+
         function addOrder() {
             // will make AJAX request instead
             var req = new XMLHttpRequest();
@@ -75,6 +94,18 @@
                 
                 cell = document.createElement("td");
                 cell.innerHTML =  orders[i].customer_code;
+                row.appendChild(cell);
+
+                cell = document.createElement("td");
+                let button = document.createElement("button");
+                button.innerHTML = "Delete";
+                button.addEventListener(
+                    "click",
+                    function(event) {
+                        deleteOnServer(orders[i].id);
+                    }
+                )
+                cell.appendChild(button)
                 row.appendChild(cell);
 
                 body.appendChild(row);
