@@ -30,7 +30,7 @@
 
         function deleteOnServer(id) {
             console.log("Deleting from the server " + id);
-            // AJAX request from the server
+            // AJAX request to the server
             var req = new XMLHttpRequest();
             // the DELETE method does not work so ...
             // req.open("DELETE", "http://127.0.0.1:3000/orders/"+id);
@@ -46,6 +46,25 @@
             };
             req.send();
         }
+
+        function searchOnServer() {
+            // AJAX request to the server
+            var req = new XMLHttpRequest();
+            var filter = document.getElementById("searchOnCustomerCode").value;
+            req.open("GET", "http://127.0.0.1:3000/orders?filterCustomerCode=" + filter);
+            req.onload = function () {
+                if (req.status == 200) {
+                    orders = JSON.parse(req.response);
+                    displayOrders();
+                } else {
+                    alert("Error searching");
+                    orders = [];
+                    displayOrders();
+                    console.error("Problem loading attendees : " + req.status);
+                }
+            };
+            req.send();
+        }    
 
         function addOrder() {
             // will make AJAX request instead
@@ -142,8 +161,8 @@
                 <li class="nav-item"> <a class="nav-link" href="clothes.html" data-abc="true">Clothes</a> </li>
                 <li class="nav-item active"> <a class="nav-link" data-abc="true">Orders</a> </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0"> <input class="form-control mr-sm-2" type="text" name="searchOnCode"
-                    id="searchOnCode" placeholder="Search">
+            <form class="form-inline my-2 my-lg-0"> <input class="form-control mr-sm-2" type="text" name="searchOnCustomerCode"
+                    id="searchOnCustomerCode" placeholder="Customer code">
                 <button class="btn btn-secondary my-2 my-sm-0" type="submit"
                     onclick="searchOnServer(); return false;">Search</button>
             </form>
