@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Notable&family=Yusei+Magic&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style2.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand"><img src="img/logo.png" alt="clothing-logo" style="width:75px; "></a>
+        
+        <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item "> <a class="nav-link" href="manufacturers.html" data-abc="true">Manufacturers<span
+                            class="sr-only">(current)</span></a> </li>
+                <li class="nav-item"> <a class="nav-link" href="clothes.html" data-abc="true">Clothes</a> </li>
+                <li class="nav-item active"> <a class="nav-link"  data-abc="true">Orders</a> </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0"> <input class="form-control mr-sm-2" type="text" name="searchOnCode"
+                    id="searchOnCode" placeholder="Search">
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit" onclick="searchOnServer(); return false;">Search</button>
+            </form>
+        </div>
+    </nav>
+</body>
+</html>
