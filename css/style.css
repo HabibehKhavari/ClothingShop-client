@@ -1,32 +1,32 @@
-body{
+body {
   text-align: center;
   background-color: rgb(199, 11, 11);
   font-family: 'Yusei Magic', sans-serif;
 }
-.motto{
+.motto {
   font-family: 'Notable', sans-serif;
   margin-top: 40px;
   color: rgb(122, 5, 5);
 }
 
-.contact-info{
-  background-color:rgb(54, 56, 58);
+.contact-info {
+  background-color: rgb(54, 56, 58);
   padding: 30px auto 0px;
 }
-.data-section img{
-width:50% ;
-height:20% ;
+.data-section img {
+  width: 50%;
+  height: 20%;
 }
-.data-section{
+.data-section {
   margin-top: 5%;
   margin-bottom: 3%;
 }
-.photo{
+.photo {
   position: relative;
   margin-top: 5%;
 }
-.detail{
-  color: rgba(255,255,255,1);
+.detail {
+  color: rgba(255, 255, 255, 1);
   padding: 10px;
   line-height: 28px;
   text-align: justify;
@@ -35,10 +35,21 @@ height:20% ;
   left: 25%;
   margin: 0;
   width: 50%;
-  background-color:rgb(0, 0, 0);
- background:-webkit-linear-gradient(bottom,rgba(0,0,0,1),rgba(0,0,0,.4));
- background:-moz-linear-gradient(bottom,rgba(0,0,0,1),rgba(0,0,0,.4));
+  background-color: rgb(0, 0, 0);
+  background: -webkit-linear-gradient(
+    bottom,
+    rgba(0, 0, 0, 1),
+    rgba(0, 0, 0, 0.4)
+  );
+  background: -moz-linear-gradient(
+    bottom,
+    rgba(0, 0, 0, 1),
+    rgba(0, 0, 0, 0.4)
+  );
 }
 .price {
-   float: right;
-  }
+  float: right;
+}
+nav {
+  text-align: left;
+}
